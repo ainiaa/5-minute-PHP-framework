@@ -9,6 +9,8 @@ class frameworkTest extends PHPUnit_Extensions_OutputTestCase {
     private $_corePath; 
     
     public function setUp() {
+	 error_reporting(E_ALL|E_STRICT);
+            ini_set('display_errors','On');
 	require_once '../app/appCore.php';
 	session_id("phpunit");
 	$this->_core = new appCore();
