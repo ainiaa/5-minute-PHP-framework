@@ -24,8 +24,8 @@ class appConfig {
      * Description of the values:
      * 
      * * General settings *
-     * - REQUIRED: absolute_url: absolute url to the site WITH the ending slash, for example: "http://example.com/mysite/"
-     * - REQUIRED: relative_url: relative url to the site WITH the beginning and ending slash, for example: "/mysite/"
+     * - absolute_url: absolute url to the site WITH the ending slash, for example: "http://example.com/mysite/" - this is REQUIRED if you want to use $absolute option in appView::link().
+     * - relative_url: relative url to the site WITH the beginning and ending slash, for example: "/mysite/". If not set, will be detected automatically.
      * - cookie_name: name of the session (so the cookie) send to the user,
      * - debug: true/false - whether or not to display debug information. This should be set to true only while in developement!
      * - date_format: date format used on the site: this is used for example to automatically convert date values to appropriate date object when inserting with MongoDB

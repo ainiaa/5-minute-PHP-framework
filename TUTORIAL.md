@@ -13,16 +13,14 @@ point to.
 All settings and configuration options are held in `public_html/index.php` file. The only thing that should be changed in this file is this array:
 
     $c->start(array(
-        "absolute_url" => "http://localhost/example/", //with the slash
-        "relative_url" => "/example/", //with the slash at the beggining and slash at the end
         "debug" => true,
         "crypt_std_key" => "wl2okswwxrqqw52k89kq3k1ou29xw66s",
     ));
 
-To start with the framework you need to set at least the `absolute_url` and `relative_url` values. If you're placing the `public_html` directory in the root
-of your server (for example, your `absolute_url` looks like this: http://www.example.com/), **you need to set the `relative_url` value to `"/"`**.
+To start with the framework you don't need to edit anything here, but if you'd like to use the framework, you may be interested in setting the `absolute_url` value
+- it is needed by appView::link() method when $absolute option is enabled to return an absolute link.
 
-Also, if you're using a web-server other than Apache, you need to adjust the "rewrites" in your server's configuration to match the contents of `.htaccess`.
+If you're using a web-server other than Apache, you need to adjust the "rewrites" in your server's configuration to match the contents of `.htaccess`.
 It is a very simple configuration: all requests that doesn't go to `www/` directory, should be directed to `index.php`.
 
 ### MVC architecture
@@ -43,17 +41,25 @@ After your configuration is set up, you can get into the `app` directory. As the
     }
 
 This is the only "special" controller in the application: `index()` method is called always for every empty request, i.e. every request than opens the "home page".
-For example if your `absolute_url` is set to *http://www.example.com/*, every request coming to *http://www.example.com/* will be redirected to this `index()` 
+For example if your application is based under *http://www.example.com/*, every request coming to *http://www.example.com/* will be redirected to this `index()` 
 method. 
 
-All requests that do not come to the root directory (`absolute_url`) are treated with the standard MVC approach: **http://www.example.com/controller/action/param1/param2/.../**
+All requests that do not come to the root directory (`/`) are treated with the standard MVC approach: **http://www.example.com/controller/action/param1/param2/.../**
 If the `action` is not set (i.e. request comes to *http://www.example.com/controller/*), it will be redirected to the `index()` method in specified controller. 
 
 See the example `welcomeController`: if the user accesses the *http://www.example.com/welcome/* page, his request will be passed to `welcomeController::index()` 
 method. If the user opens the *http://www.example.com/welcome/someaction/* page his request will be passed to `welcomeController::someaction()`. 
 
-**Note:** if the action called in url does not exist in the controller, the `index()` method will be called instead.
+**Note:** if the action called in url does not exist in the controller, the `index()` method will be called instead. This behaviour can be changed by editing appCore.php file
+and replacing line 176: 
 
+    call_user_func_array(array($c, "index"), $params); 
+
+with the contents of line 177 (currently commented out):
+
+    $this->throw404("Cannot call $controllerName -> $method - no such method!");
+
+This way, call to undefined method will return 404 error, instead of calling `index()` method.
 
 
 #### Models
@@ -85,7 +91,7 @@ So, if you want your model to connect to the database "test" and use the table (
 
 #### Templates
 
-`templates` directory holds all HTML files that will be outputted to the end user. There should always be a file called `main.php`, which holds the "main"
+`templates` directory holds all HTML files that will be outputted to the end user. There should always be a file called `layout.php`, which holds the "main"
 HTML template of the whole page. Inside this file there should be a loop:
 
     <?php foreach($templates as $template){ include($template); }?>
@@ -94,7 +100,7 @@ Every other template file will be passed in the `$templates` array to this file.
 
 There are also special templates starting with the `error_` prefix in the file name. Each file like this will be used to show an error message to the user.
 For example, file `error_404.php` will be shown in case of the 404 error. Note that error templates must contain *whole* HTML page, as they will NOT be included
-inside the `main.php`.
+inside the `layout.php`.
 Refer to the existing template files for the examples.
 
 

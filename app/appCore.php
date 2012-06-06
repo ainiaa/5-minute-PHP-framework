@@ -99,13 +99,10 @@ class appCore {
             ini_set('display_errors','On');
         }
         
-        if(!appConfig::get("absolute_url")){
-            $this->throwError(500, "absolute_url config setting is not defined!");
-        }
         if(!appConfig::get("relative_url")){
-            $this->throwError(500, "relative_url config setting is not defined!");
+	    appConfig::setKey("relative_url", dirname($_SERVER['PHP_SELF']).DIRECTORY_SEPARATOR);
         }
-        
+
 	$this->_view = appPocket::view();
 	$this->_cookies = appPocket::cookie();
 	
@@ -123,14 +120,14 @@ class appCore {
      * Handles request uri and calls appropriate controller as needed.
      */
     private function dispatch(){
-	$relUrl = appConfig::get("relative_url");
+	$relUrl = appConfig::get("relative_url");	
 	$requestUri = $_SERVER['REQUEST_URI'];
 	if($relUrl == "" || $relUrl == "/"){
 	    if(strpos($_SERVER['REQUEST_URI'], "/") === 0){
 		$requestUri = substr($requestUri, 1);
 	    }
 	}else{
-	    $requestUri = str_replace(appConfig::get("relative_url"), "", $_SERVER['REQUEST_URI']);
+	    $requestUri = str_replace(appConfig::get("relative_url"), "", $requestUri);
 	}
 	
         $request = explode("/", $requestUri);
@@ -138,14 +135,16 @@ class appCore {
 	    $val = $this->cleanArgument($val);
 	}
 
+	$request = array_values(array_filter($request));
+
 	$controllerName = false;
 	$method = "index"; //default method
 	$params = array();
 	
-	if(count($request) == 1 && $request[0] == ""){ //dispatch empty calls
+	if(empty($request)){ //dispatch empty calls
 	    $controllerName = "app";
         }
-        elseif(count($request) > 0){ //dispatch class with functions
+        else{ //dispatch class with functions
 	    $controllerName = $request[0];  //get controller name
 
             if(isset($request[1]) && !empty($request[1])){ //get method if in url
@@ -154,7 +153,7 @@ class appCore {
 	    
 	    unset($request[0]); //clean request table
 	    unset($request[1]); //clean request table
-	    $params = array_filter($request); //remove all empty stuff - should have only params left
+	    $params = $request; //remove all empty stuff - should have only params left
         }	
 
 	if($controllerName){

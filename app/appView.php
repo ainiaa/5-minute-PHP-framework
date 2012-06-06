@@ -100,7 +100,7 @@ class appView {
 	    extract($this->_templates_args);
 	    
 	    ob_start();
-	    require 'templates/main.php';
+	    require 'templates/layout.php';
 	    $ajTempls = ob_get_clean();
 	    echo $ajTempls;
         }elseif(!empty($this->_ajaxData)){

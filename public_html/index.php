@@ -15,8 +15,6 @@ $c = new appCore();
  * For more information about this settings, refer to {@link appConfig::$_defaults}.
  */
 $c->start(array(
-    "absolute_url" => "http://localhost/example/", //with the slash
-    "relative_url" => "/example/", //with the slash at the beggining and slash at the end
     "debug" => true,
     "crypt_std_key" => "wl2okswwxrqqw52k89kq3k1ou29xw66s",
 ));

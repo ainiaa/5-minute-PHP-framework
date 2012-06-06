@@ -26,10 +26,9 @@ Small and fast PHP framework usable for practically any small PHP project. Conta
 ## How to start
 
 1. Download the source files (as [zip](https://github.com/pbudzon/5-minute-PHP-framework/zipball/master) or [tar.gz](https://github.com/pbudzon/5-minute-PHP-framework/tarball/master) or clone this repository).
-2. Edit the `public_html/index.php` file to adjust config settings: set `absolute_url` and `relative_url` to proper values (refer to inline documentation for more details on config values).
-3. *Optional*: you may also want to set the `cookie_name` value.
-4. Point your server to `public_html`.
-5. You're good to go!
+2. *Optional*: edit the `public_html/index.php` file to adjust config settings: refer to inline documentation for more details on config values. You may want to set the `cookie_name` and `absolute_url` values.
+3. Point your server to `public_html`.
+4. You're good to go!
 
 ## How to see the build-in example
 
