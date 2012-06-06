@@ -11,6 +11,7 @@ Small and fast PHP framework usable for practically any small PHP project. Conta
 * Can be easily extended with almost any database support, transparently to the rest of the code.
 * Encrypts and decrypts (automatically) data passed to the database (encrypting can be defined for each model separately).
 * Automatically caches database results with Memcached.
+* Allows for basic access restrictions to each controller based on IP address.
 * Supports AJAX requests.
 * Contains example of a simple user's object allowing to login the user.
 * Easy to maintain and improve.
@@ -50,6 +51,20 @@ Set the `memcache_host` config value to appropriate memcache host (`memcache_por
 * _How to use models data encryption?_
 
 Change `crypt_std_key` value to any key you want (with the same lenght) and set `$_crypted` value in appropriate models to `true`. Also, remember to encrypt all data before inserting it to the database (it will be decrypted automatically). Refer to usersModel_ files for example.
+
+
+* _How can I use restriction of access for specific controllers?_
+
+See the appConfig.php file for information on `restrict` config key. Basic usage:
+
+    "restrict" => array(
+	"admin" => array(	    
+	    "127.0.0.1", 
+	    "::1", //127.0.0.1 in ipv6   
+	)
+    )
+
+This will restrict access to the controller named "admin" only to users connecting from localhost.
 
 
 * _What should I do next?_
