@@ -88,7 +88,7 @@ Simple tutorial is available in [TUTORIAL](https://github.com/pbudzon/5-minute-P
 
 Licensed under BSD 2-Clause License.
 
-Copyright &copy; 2011 Paulina Budzoń. All rights reserved.
+Copyright &copy; 2011 - 2012 Paulina Budzoń. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
 permitted provided that the following conditions are met:
