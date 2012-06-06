@@ -58,10 +58,10 @@ Change `crypt_std_key` value to any key you want (with the same lenght) and set 
 See the appConfig.php file for information on `restrict` config key. Basic usage:
 
     "restrict" => array(
-	"admin" => array(	    
-	    "127.0.0.1", 
-	    "::1", //127.0.0.1 in ipv6   
-	)
+        "admin" => array(	    
+            "127.0.0.1", 
+            "::1", //127.0.0.1 in ipv6   
+        )
     )
 
 This will restrict access to the controller named "admin" only to users connecting from localhost.
