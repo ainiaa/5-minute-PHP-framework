@@ -100,7 +100,11 @@ class appCore {
         }
         
         if(!appConfig::get("relative_url")){
-	    appConfig::setKey("relative_url", dirname($_SERVER['PHP_SELF']).DIRECTORY_SEPARATOR);
+	    $relative = dirname($_SERVER['PHP_SELF']);
+            if(substr($relative, -1) != "/"){
+                $relative = $relative.DIRECTORY_SEPARATOR;
+            }
+	    appConfig::setKey("relative_url", $relative);
         }
 
 	$this->_view = appPocket::view();
